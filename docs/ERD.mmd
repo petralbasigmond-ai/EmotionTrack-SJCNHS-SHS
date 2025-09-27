@@ -1,0 +1,69 @@
+erDiagram
+    USERS {
+        id INT PK
+        firstname STRING
+        lastname STRING
+        email STRING
+        password_hash STRING
+        birthday DATE
+        gender STRING
+        strand STRING
+        grade_level STRING
+        section STRING
+        is_admin BOOLEAN
+        role ENUM
+        created_at DATETIME
+        last_profile_update DATETIME
+    }
+
+    MOOD_LOGS {
+        log_id INT PK
+        user_id INT FK
+        emotion STRING
+        intensity INT
+        sleep FLOAT
+        energy INT
+        triggers STRING
+        coping STRING
+        gratitude TEXT
+        log_date DATETIME
+    }
+
+    DASS21_RESULTS {
+        id INT PK
+        user_id INT FK
+        depression_score INT
+        anxiety_score INT
+        stress_score INT
+        depression_severity STRING
+        anxiety_severity STRING
+        stress_severity STRING
+        created_at DATETIME
+    }
+
+    STUDENT_MESSAGES {
+        id INT PK
+        sender_user_id INT FK
+        message_text TEXT
+        is_read BOOLEAN
+        admin_response TEXT
+        is_response_read_by_student BOOLEAN
+        conversation_type STRING
+        responded_by_admin_id INT FK
+        created_at DATETIME
+        responded_at DATETIME
+    }
+
+    CLASS_ASSIGNMENTS {
+        id INT PK
+        faculty_id INT FK
+        grade_level STRING
+        section STRING
+        created_at DATETIME
+    }
+
+    USERS ||--o{ MOOD_LOGS : "user_id"
+    USERS ||--o{ DASS21_RESULTS : "user_id"
+    USERS ||--o{ STUDENT_MESSAGES : "sender_user_id"
+    USERS ||--o{ STUDENT_MESSAGES : "responded_by_admin_id"
+    USERS ||--o{ CLASS_ASSIGNMENTS : "faculty_id"
